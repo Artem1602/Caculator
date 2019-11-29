@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="answer">Answer</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="equal">=</string>
+    <string name="multiply">*</string>
+
+    <string name="sin">sin</string>
+    <string name="asin">asin</string>
+    <string name="cos">cos</string>
+    <string name="acos">acos</string>
+    <string name="tan">tan</string>
+    <string name="atan">atan</string>
+
+    <string name="sqr_root">\u221a</string>
+    <string name="XY">y^X</string>
+
+    <string name="bin">BIN</string>
+    <string name="oct">OCT</string>
+    <string name="hex">HEX</string>
+    <string name="factorial">X!</string>
+    <string name="pi">pi</string>
+    <string name="ln">ln</string>
+    <string name="e">e</string>
+
+
+    <string name="split">/</string>
+    <string name="point">.</string>
+    <string name="bracket1">(</string>
+    <string name="bracket2">)</string>
+    <string name="revision">%</string>
+    <string name="clear">Dell</string>
+
+</resources>
