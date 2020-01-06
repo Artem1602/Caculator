@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.app.Activity;
 
-import java.text.NumberFormat;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
@@ -26,6 +25,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     Button plus, equal, minus, split, multiply, split_rev;
     Button bin,oct,hex;
     Button pi, ln, factorial, e;
+    Button save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,52 +33,52 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         Window window = getWindow();
         window.setStatusBarColor(Color.rgb(0,0,0));
 
-        enter = (EditText) findViewById(R.id.enter);
-        answer = (EditText) findViewById(R.id.answer);
+        enter =  findViewById(R.id.enter);
+        answer = findViewById(R.id.answer);
 
-        one = (Button) findViewById(R.id.one);
-        two = (Button) findViewById(R.id.two);
-        three = (Button) findViewById(R.id.three);
-        four = (Button) findViewById(R.id.four);
-        five = (Button) findViewById(R.id.five);
-        six = (Button) findViewById(R.id.six);
-        seven = (Button) findViewById(R.id.seven);
-        eight = (Button) findViewById(R.id.eight);
-        nine = (Button) findViewById(R.id.nine);
-        zero = (Button) findViewById(R.id.zero);
-        point = (Button) findViewById(R.id.point);
-        clear = (Button) findViewById(R.id.clear);
-        bracket1 = (Button) findViewById(R.id.bracket1);
-        bracket2 = (Button) findViewById(R.id.bracket2);
+        one =    findViewById(R.id.one);
+        two =    findViewById(R.id.two);
+        three =  findViewById(R.id.three);
+        four =   findViewById(R.id.four);
+        five =   findViewById(R.id.five);
+        six =    findViewById(R.id.six);
+        seven =  findViewById(R.id.seven);
+        eight =  findViewById(R.id.eight);
+        nine =   findViewById(R.id.nine);
+        zero =   findViewById(R.id.zero);
+        point =  findViewById(R.id.point);
+        clear =  findViewById(R.id.clear);
+        bracket1 = findViewById(R.id.bracket1);
+        bracket2 = findViewById(R.id.bracket2);
 
-        plus = (Button) findViewById(R.id.plus);
-        minus = (Button) findViewById(R.id.minus);
-        equal = (Button) findViewById(R.id.equal);
-        split = (Button) findViewById(R.id.split);
-        split_rev = (Button) findViewById(R.id.split_revision);
-        multiply = (Button) findViewById(R.id.multiply);
-        pi = (Button) findViewById(R.id.pi);
+        plus =   findViewById(R.id.plus);
+        minus =  findViewById(R.id.minus);
+        equal =  findViewById(R.id.equal);
+        split =  findViewById(R.id.split);
+        pi =     findViewById(R.id.pi);
+        split_rev = findViewById(R.id.split_revision);
+        multiply =  findViewById(R.id.multiply);
         String s = new String(Character.toChars(120529));
         pi.setTextSize(20);
         pi.setText(s);
-        ln = (Button) findViewById(R.id.ln);
-        factorial = (Button) findViewById(R.id.factorial);
-        e = (Button) findViewById(R.id.exp);
+        factorial = findViewById(R.id.factorial);
+        ln =     findViewById(R.id.ln);
+        e =      findViewById(R.id.exp);
 
 
-        sqrt = (Button) findViewById(R.id.sqrt);
-        yX = (Button) findViewById(R.id.yX);
+        sqrt =   findViewById(R.id.sqrt);
+        yX =     findViewById(R.id.yX);
 
-        sin = (Button) findViewById(R.id.sin);
-        asin = (Button) findViewById(R.id.asin);
-        cos = (Button) findViewById(R.id.cos);
-        acos = (Button) findViewById(R.id.acos);
-        tan = (Button) findViewById(R.id.tan);
-        atan = (Button) findViewById(R.id.atan);
+        sin =    findViewById(R.id.sin);
+        asin =   findViewById(R.id.asin);
+        cos =    findViewById(R.id.cos);
+        acos =   findViewById(R.id.acos);
+        tan =    findViewById(R.id.tan);
+        atan =   findViewById(R.id.atan);
 
-        bin = (Button) findViewById(R.id.bin);
-        oct = (Button) findViewById(R.id.oct);
-        hex = (Button) findViewById(R.id.hex);
+        bin =    findViewById(R.id.bin);
+        oct =    findViewById(R.id.oct);
+        hex =    findViewById(R.id.hex);
 
         one.setOnClickListener(this);
         two.setOnClickListener(this);
@@ -127,158 +127,128 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     {
 
         Integer buf;
-        try
+
+        switch(v.getId())
         {
-            switch(v.getId())
-            {
-                case R.id.one:
-                    enter.setText(enter.getText()+"1");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.two:
-                    enter.setText(enter.getText()+"2");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.three:
-                    enter.setText(enter.getText()+"3");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.four:
-                    enter.setText(enter.getText()+"4");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.five:
-                    enter.setText(enter.getText()+"5");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.six:
-                    enter.setText(enter.getText()+"6");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.seven:
-                    enter.setText(enter.getText()+"7");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.eight:
-                    enter.setText(enter.getText()+"8");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.nine:
-                    enter.setText(enter.getText()+"9");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.zero:
-                    enter.setText(enter.getText()+"0");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.point:
-                    enter.setText(enter.getText()+".");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case  R.id.bracket1:
-                    enter.setText(enter.getText()+"(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.bracket2:
-                    enter.setText(enter.getText()+")");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.plus:
-                    enter.setText(enter.getText()+"+");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.sin:
-                    enter.setText(enter.getText() + "sin(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.asin:
-                    enter.setText(enter.getText() + "asin(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.cos:
-                    enter.setText(enter.getText() + "cos(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.acos:
-                    enter.setText(enter.getText() + "acos(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.tan:
-                    enter.setText(enter.getText() + "tan(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.atan:
-                    enter.setText(enter.getText() + "atan(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.sqrt:
-                    enter.setText(enter.getText() + "sqrt(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.yX:
-                    enter.setText(enter.getText() + "^");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.minus:
-                    enter.setText(enter.getText()+"-");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.split:
-                    enter.setText(enter.getText()+"/");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.split_revision:
-                    enter.setText(enter.getText()+"%");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.multiply:
-                    enter.setText(enter.getText()+"*");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.equal:
+            case R.id.one:
+                set_text("1");
+                break;
+            case R.id.two:
+                set_text("2");
+                break;
+            case R.id.three:
+                set_text("3");
+                break;
+            case R.id.four:
+                set_text("4");
+                break;
+            case R.id.five:
+                set_text("5");
+                break;
+            case R.id.six:
+                set_text("6");
+                break;
+            case R.id.seven:
+                set_text("7");
+                break;
+            case R.id.eight:
+                set_text("8");
+                break;
+            case R.id.nine:
+                set_text("9");
+                break;
+            case R.id.zero:
+                set_text("0");
+                break;
+            case R.id.point:
+                set_text(".");
+                break;
+            case  R.id.bracket1:
+                set_text("(");
+                break;
+            case R.id.bracket2:
+                set_text(")");
+                break;
+            case R.id.plus:
+                set_text("+");
+                break;
+            case R.id.sin:
+                set_text("sin(");
+                break;
+            case R.id.asin:
+                set_text("asin(");
+                break;
+            case R.id.cos:
+                set_text("cos(");
+                break;
+            case R.id.acos:
+                set_text("acos(");
+                break;
+            case R.id.tan:
+                set_text("tan(");
+                break;
+            case R.id.atan:
+                set_text("atan(");
+                break;
+            case R.id.sqrt:
+                set_text("sqrt(");
+                break;
+            case R.id.yX:
+                set_text("^");
+                break;
+            case R.id.minus:
+                set_text("-");
+                break;
+            case R.id.split:
+                set_text("/");
+                break;
+            case R.id.split_revision:
+                set_text("%");
+                break;
+            case R.id.multiply:
+                set_text("*");
+                break;
+            case R.id.equal:
+                try{
                     answer.setText(Double.toString(eval(enter.getText().toString())));
-                    break;
-                case R.id.bin:
-                    buf = Integer.parseInt(enter.getText().toString());
-                    answer.setText(Integer.toBinaryString(buf));
-                    break;
-                case R.id.oct:
-                    buf = Integer.parseInt(enter.getText().toString());
-                    answer.setText(Integer.toOctalString(buf));
+                }catch (Exception e)
+                {
+                    answer.setText("Error");
+                }
+                break;
+            case R.id.bin:
+                buf = Integer.parseInt(enter.getText().toString());
+                answer.setText(Integer.toBinaryString(buf));
+                break;
+            case R.id.oct:
+                buf = Integer.parseInt(enter.getText().toString());
+                answer.setText(Integer.toOctalString(buf));
 
-                    break;
-                case R.id.hex:
-                    buf = Integer.parseInt(enter.getText().toString());
-                    answer.setText(Integer.toHexString(buf));
-                    break;
-                case R.id.pi:
-                    enter.setText(enter.getText()+"3.141592653589");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.ln:
-                    enter.setText(enter.getText() + "ln(");
-                    enter.setSelection(enter.getText().length());
-                    break;
-                case R.id.factorial:
-                    enter.setText(enter.getText() + "!");
-                    enter.setSelection(enter.getText().length());
+                break;
+            case R.id.hex:
+                buf = Integer.parseInt(enter.getText().toString());
+                answer.setText(Integer.toHexString(buf));
+                break;
+            case R.id.pi:
+                set_text("3.141592653589");
+                break;
+            case R.id.ln:
+                set_text("ln(");
+                break;
+            case R.id.factorial:
+                enter.setText(enter.getText() + "!");
+                enter.setSelection(enter.getText().length());
 
-                    Integer a = factorial(enter.getText().toString());
-                    answer.setText(a.toString());
-                    break;
-                case R.id.exp:
-                    enter.setText(enter.getText() + "2.718281828459");
-                    enter.setSelection(enter.getText().length());
-                    break;
+                Integer a = factorial(enter.getText().toString());
+                answer.setText(a.toString());
+                break;
+            case R.id.exp:
+                set_text("2.718281828459");
+                break;
 
-            }
-        } catch (Exception e)
-        {
-            answer.setText("Error");
         }
 
     }
-
     private int factorial(String number)
     {
         String result = null;
@@ -298,6 +268,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     @Override
     public boolean onTouch(View v, MotionEvent event)
     {
+
         switch (event.getAction())
         {
 
@@ -317,6 +288,15 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         return super.onKeyLongPress(keyCode, event);
+    }
+
+    public void set_text(String s)
+    {
+        int selection_pos = enter.getSelectionStart();
+        StringBuffer buf = new StringBuffer(enter.getText().toString());
+        buf.insert(enter.getSelectionStart(),s);
+        enter.setText(buf.toString());
+        enter.setSelection(selection_pos + s.length());
     }
 
     //I took this method from the: https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
