@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/calculator"
+        android:icon="@drawable/ic_calc_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/calculator"
+        android:roundIcon="@drawable/ic_calc_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">

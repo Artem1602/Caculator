@@ -168,8 +168,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_arrow_back_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\zmejk" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_calc_icon" />
+                            <entry key="sourceFile" value="C:\Users\zmejk\Desktop\Calc_icon.svg" />
                           </map>
                         </option>
                       </PersistentState>
