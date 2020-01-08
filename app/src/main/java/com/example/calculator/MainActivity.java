@@ -1,8 +1,12 @@
 package com.example.calculator;
 
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,13 +29,19 @@ public class MainActivity extends Activity implements View.OnClickListener, View
     Button plus, equal, minus, split, multiply, split_rev;
     Button bin,oct,hex;
     Button pi, ln, factorial, e;
-    Button save;
+    Button history_b;
+
+    DBHelper dbHelper;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Window window = getWindow();
         window.setStatusBarColor(Color.rgb(0,0,0));
+
+        dbHelper = new DBHelper(this);
+        db = dbHelper.getWritableDatabase();
 
         enter =  findViewById(R.id.enter);
         answer = findViewById(R.id.answer);
@@ -61,6 +71,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         String s = new String(Character.toChars(120529));
         pi.setTextSize(20);
         pi.setText(s);
+        history_b = findViewById(R.id.history_b);
         factorial = findViewById(R.id.factorial);
         ln =     findViewById(R.id.ln);
         e =      findViewById(R.id.exp);
@@ -93,6 +104,7 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         point.setOnClickListener(this);
 
         clear.setOnTouchListener(this);
+        history_b.setOnClickListener(this);
         bracket1.setOnClickListener(this);
         bracket2.setOnClickListener(this);
 
@@ -210,7 +222,10 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                 break;
             case R.id.equal:
                 try{
-                    answer.setText(Double.toString(eval(enter.getText().toString())));
+                    Double answ = eval(enter.getText().toString());
+                    answer.setText(Double.toString(answ));
+                    save_history(answ);
+
                 }catch (Exception e)
                 {
                     answer.setText("Error");
@@ -245,26 +260,45 @@ public class MainActivity extends Activity implements View.OnClickListener, View
             case R.id.exp:
                 set_text("2.718281828459");
                 break;
+            case R.id.history_b:
+                load_history();
+                break;
 
         }
 
     }
-    private int factorial(String number)
+    private void load_history()
     {
-        String result = null;
-        if ((number != null) && (number.length() > 0))
+        Cursor cursor = db.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
+        int i = 0;
+        if(cursor.moveToFirst())
         {
-            result = number.substring(0, number.length() - 1);
+            int id_index = cursor.getColumnIndex(DBHelper.KEY_ID);
+            int number_index = cursor.getColumnIndex(DBHelper.KEY_NUMBER);
+
+            do{
+                i++;
+                Log.d("Debug","ID = " + cursor.getInt(id_index) + " Number = " + cursor.getDouble(number_index) + "   " + i);
+                if(i > 10)
+                {
+                    //If rows > 10  (do it)
+                    //db.delete(DBHelper.TABLE_NAME,DBHelper.KEY_ID + "=" + cursor.getInt(id_index),null);
+                    db.delete(DBHelper.TABLE_NAME,null,null);
+                }
+            }while (cursor.moveToNext());
         }
-        Integer f = Integer.parseInt(result);
-        int answer = 1;
-        for(int i=1;i<f;f--)
-        {
-            answer *= f;
-        }
-        return answer;
+        else {Log.d("Debug","Error");}
+        cursor.close();
     }
 
+    private void save_history(Double d)
+    {
+        String answer = Double.toString(d);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.KEY_NUMBER,answer);
+        db.insert(DBHelper.TABLE_NAME,null, contentValues);
+
+    }
     @Override
     public boolean onTouch(View v, MotionEvent event)
     {
@@ -297,6 +331,22 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         buf.insert(enter.getSelectionStart(),s);
         enter.setText(buf.toString());
         enter.setSelection(selection_pos + s.length());
+    }
+
+    private int factorial(String number)
+    {
+        String result = null;
+        if ((number != null) && (number.length() > 0))
+        {
+            result = number.substring(0, number.length() - 1);
+        }
+        Integer f = Integer.parseInt(result);
+        int answer = 1;
+        for(int i=1;i<f;f--)
+        {
+            answer *= f;
+        }
+        return answer;
     }
 
     //I took this method from the: https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
@@ -408,5 +458,4 @@ public class MainActivity extends Activity implements View.OnClickListener, View
             }
         }.parse();
     }
-
 }

@@ -34,7 +34,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#00FFFEFE">
 
         <TableLayout
             android:id="@+id/tableLayout2"
@@ -178,11 +179,13 @@
         <TableLayout
             android:id="@+id/tableLayout"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:stretchColumns="*"
             app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/history_b"
+            app:layout_constraintVertical_bias="1.0">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -415,6 +418,17 @@
                 android:backgroundTint="#FFFFFF"
                 android:text="@string/equal" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/history_b"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+
+            android:backgroundTint="#FFFFFF"
+
+            android:text="History"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
