@@ -7,14 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.app.Activity;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
@@ -107,6 +111,8 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         history_b.setOnClickListener(this);
         bracket1.setOnClickListener(this);
         bracket2.setOnClickListener(this);
+
+        registerForContextMenu(history_b);
 
         plus.setOnClickListener(this);
         minus.setOnClickListener(this);
@@ -261,34 +267,10 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                 set_text("2.718281828459");
                 break;
             case R.id.history_b:
-                load_history();
+                Toast.makeText(this,"Hold it",Toast.LENGTH_SHORT).show();
                 break;
-
         }
 
-    }
-    private void load_history()
-    {
-        Cursor cursor = db.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
-        int i = 0;
-        if(cursor.moveToFirst())
-        {
-            int id_index = cursor.getColumnIndex(DBHelper.KEY_ID);
-            int number_index = cursor.getColumnIndex(DBHelper.KEY_NUMBER);
-
-            do{
-                i++;
-                Log.d("Debug","ID = " + cursor.getInt(id_index) + " Number = " + cursor.getDouble(number_index) + "   " + i);
-                if(i > 10)
-                {
-                    //If rows > 10  (do it)
-                    //db.delete(DBHelper.TABLE_NAME,DBHelper.KEY_ID + "=" + cursor.getInt(id_index),null);
-                    db.delete(DBHelper.TABLE_NAME,null,null);
-                }
-            }while (cursor.moveToNext());
-        }
-        else {Log.d("Debug","Error");}
-        cursor.close();
     }
 
     private void save_history(Double d)
@@ -297,8 +279,52 @@ public class MainActivity extends Activity implements View.OnClickListener, View
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.KEY_NUMBER,answer);
         db.insert(DBHelper.TABLE_NAME,null, contentValues);
-
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        switch (v.getId())
+        {
+            case R.id.history_b:
+                Double[] arr = new Double[10];
+                Cursor cursor = db.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
+                if(cursor.moveToFirst())
+                {
+                    int id_index = cursor.getColumnIndex(DBHelper.KEY_ID);
+                    int number_index = cursor.getColumnIndex(DBHelper.KEY_NUMBER);
+                    int i=0;
+                    do{
+                        Log.d("Debug","ID = " + cursor.getInt(id_index) + " Number = " + cursor.getDouble(number_index) + "   " + i);
+                        if(i < 10)
+                        {
+                            arr[i] = cursor.getDouble(number_index);
+                        }
+                        i++;
+                    }while (cursor.moveToNext());
+                }
+                else {Log.d("Debug","Error");}
+                cursor.close();
+                for(int i=0;i<10;i++)
+                {
+                    if(arr[i] == null) {
+                        break;
+                    }
+                    menu.add(0,i,i,Double.toString(arr[i]));
+                }
+
+                break;
+        }
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        enter.setText(item.getTitle());
+        enter.setSelection(enter.getText().length());
+
+        return super.onContextItemSelected(item);
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event)
     {
@@ -457,5 +483,11 @@ public class MainActivity extends Activity implements View.OnClickListener, View
                 return x;
             }
         }.parse();
+    }
+
+    @Override
+    protected void onDestroy() {
+        db.delete(DBHelper.TABLE_NAME,null,null);
+        super.onDestroy();
     }
 }
